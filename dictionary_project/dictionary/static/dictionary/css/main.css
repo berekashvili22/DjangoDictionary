@@ -1,0 +1,158 @@
+body {
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+}
+
+/* navbar */
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.bg-dark {
+    background-color: rgb(36, 34, 34)!important;
+}
+
+.nav-link {
+    color: #fff!important;
+    font-weight: bold!important;
+}
+
+.navLeft {
+    width: 400px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navRight {
+    width: 250px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.linkRight {
+    background-color: #fff;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    height: 35px;
+}
+
+.linkRight a {
+    color: black!important;
+    font-weight: bold;
+}
+
+/* home page */
+
+.home-main-cont {
+    display: flex;
+}
+
+.home-left-cont {
+    background-color: #2f3239;
+    height: 100vh;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-right-cont {
+    background-color: #f5f5f5;
+    height: 100vh;
+    width: 100%;
+}
+
+.image-cont {
+    /* background-color: white; */
+    margin-top: 25px;
+    width: 100px;
+}
+.profile-avatar {
+    width: 100%;
+}
+
+.profile-username {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(228, 203, 203);
+    text-transform: capitalize;
+    letter-spacing: 1px;    
+}
+
+/* profile nav */
+.profile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    height: 60vh;
+    width: 100%;
+}
+
+.profile-nav-ul  {
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: left;
+    color: #fff;
+}
+
+
+.profile-nav-a {
+    color: rgb(228, 203, 203);
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none!important;
+}
+
+.profile-nav-a:hover {
+    border-bottom: 2px solid #fff;
+    color: #fff;
+}
+
+/* dictionaries */
+
+.dict-cont {
+    background-color: rgb(206, 47, 47);
+    width: 300px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.555);
+    position: relative;
+}
+
+.dict-cont h4 {
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.dict-details {
+    position: absolute;
+    display: flex;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    bottom: 1%;
+    left: 1%;
+}
+
+.dict-view {
+    position: absolute;
+    display: flex;
+    right: 5%;
+    bottom: -5%;
+}

@@ -1,5 +1,5 @@
 body {
-    background-color: #f5f5f5;
+    background-color: #f1f1f1;
     box-sizing: border-box;
 }
 
@@ -128,8 +128,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 5px;
-    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.555);
+    border-radius: 10px;
+    /* box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.555); */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
     position: relative;
     font-family: 'Roboto', sans-serif;
 }
@@ -175,10 +176,36 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: #2e5977;
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.555);
+    background-color: #353841;
 }
 
 
-.add-dict:hover {
-    box-shadow: 0px 3px 5px black;
+#add-dict-svg:hover {
+    fill: #1ba322;
+}
+
+
+/* dict create form */
+
+.dict-form {
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+.color {
+    width: 100px;
+}
+
+#dict-form-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.dict-img-cont {
+    width: 50%;
+}
+
+.dict-img {
+    max-width: 100%;
 }

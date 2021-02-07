@@ -16,7 +16,7 @@ class Word(models.Model):
     dictionary = models.ForeignKey(Dictionary, on_delete=models.CASCADE)
     original_word = models.CharField(max_length=45, null=False)
     translated_word = models.CharField(max_length=45, null=False)
-    description = models.TextField(null=True, blank=True)
+    definition = models.TextField(null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

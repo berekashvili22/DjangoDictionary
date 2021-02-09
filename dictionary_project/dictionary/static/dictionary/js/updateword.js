@@ -6,51 +6,63 @@ for(var i=0; i<updateBtns.length; i++) {
     updateBtns[i].addEventListener('click', function(){
         var wordId = this.dataset.word;
         var action = this.dataset.action;
+        // select row with self.id , hide data and show edit field 
+        // original world
+        let origInput = document.getElementsByClassName('tbl-input ' + wordId + ' original')[0]
+        // translated world
+        let transInput = document.getElementsByClassName('tbl-input ' + wordId + ' translated')[0]
+        // definition
+        let definInput = document.getElementsByClassName('tbl-input ' + wordId + ' definition')[0]
+        // buttons
+        var delBtn = document.getElementById('delBtn' + wordId)
+        var doneBtn = document.getElementById('doneBtn' + wordId)
+        var cancelBtn = document.getElementById('cancelBtn' + wordId)
+        var editBtn = document.getElementById('editBtn' + wordId)
+
         // check if action is cancle or edit
-        
-        if (action == "edit") {    
-            // select row with self.id , hide data and show edit field 
+        if (action == "edit") {  
+            // change row element display styles  
             // for origianl world
-            document.getElementsByClassName('tbl-input ' + wordId + ' original')[0].style.display = "block";
-            document.getElementsByClassName('tbl-data ' + wordId + ' original')[0].style.display = "none";
-
+            origInput.readOnly = false;
             // for origianl world
-            document.getElementsByClassName('tbl-input ' + wordId + ' translated')[0].style.display = "block";
-            document.getElementsByClassName('tbl-data ' + wordId + ' translated')[0].style.display = "none";
-            
+            transInput.readOnly = false;
             // for definition
-            document.getElementsByClassName('tbl-input ' + wordId + ' definition')[0].style.display = "block";
-            document.getElementsByClassName('tbl-data ' + wordId + ' definition')[0].style.display = "none";
-
-
-            document.getElementsByClassName('delete-row ' + wordId)[0].style.display = "none";
-            document.getElementsByClassName('update-row ' + wordId)[0].style.display = "block";
-            document.getElementsByClassName('save-row ' + wordId)[0].style.display = "block";
-
+            definInput.readOnly = false;
+            // for buttons
+            delBtn.style.display = "none";
+            doneBtn.style.display = "block";
+            cancelBtn.style.display = "block";
             this.style.display = "none";
 
-        } else {
-            console.log('cancel')
+        } else if (action == "cancle") {
+            // change row element display styles  
+            // for origianl world
+            origInput.readOnly = true;
+            // for origianl world
+            transInput.readOnly = true;
+            // for definition
+            definInput.readOnly = true;
+            // for buttons
+            editBtn.style.display = "block";
+            delBtn.style.display = "block"
+            doneBtn.style.display = "none";
+            this.style.display = "none";
+
+        } else if (action == "save") {
+            // get edited data from forms
+            var originalWord = origInput.value;
+            var translatedWord =  transInput.value;
+            var definition = definInput.value;
+            // send data to function
+            updateWord(originalWord, translatedWord, definition, wordId, action)
+        } else if (action == "delete") {
+            var originalWord = '';
+            var translatedWord = '';
+            var definition = '';
+            updateWord(originalWord, translatedWord, definition, wordId, action)
         }
     });
 }
-
-// gets and sends data of edited rows to function
-  
-var doneBtns = document.getElementsByClassName('save-row');
-
-for(var i=0; i<doneBtns.length; i++) {
-    doneBtns[i].addEventListener('click', function(){
-      var rowId = this.dataset.rowid;
-      // get edited data from forms
-      var originalWord = document.getElementsByClassName('tbl-input ' + rowId + ' original')[0].value;
-      var translatedWord = document.getElementsByClassName('tbl-input ' + rowId + ' translated')[0].value;
-      var definition = document.getElementsByClassName('tbl-input ' + rowId + ' definition')[0].value;
-      // send data to function
-      updateWord(originalWord, translatedWord, definition, rowId)
-    });
-} 
-
 
 // get csrf token
 function getCookie(name) {
@@ -72,7 +84,7 @@ const csrftoken = getCookie('csrftoken');
 
 
 // sends data to server 
-function updateWord(original, translated, definition, id){
+function updateWord(original, translated, definition, id, action){
     console.log('params passed to function')
 
     var url = '/dictionary/update/'
@@ -83,7 +95,7 @@ function updateWord(original, translated, definition, id){
             'Content-Type': 'appliaction/json',
             'X-CSRFToken': csrftoken,
         },
-        body:JSON.stringify({'original': original, 'translated': translated, 'definition': definition, 'wordId': id})
+        body:JSON.stringify({'original': original, 'translated': translated, 'definition': definition, 'wordId': id, 'action': action})
     })
 
     .then((response) =>{

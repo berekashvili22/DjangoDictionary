@@ -24,10 +24,13 @@ for(var i=0; i<updateBtns.length; i++) {
             // change row element display styles  
             // for origianl world
             origInput.readOnly = false;
+            origInput.classList.add('active-input')
             // for origianl world
             transInput.readOnly = false;
+            transInput.classList.add('active-input')
             // for definition
             definInput.readOnly = false;
+            definInput.classList.add('active-input')
             // for buttons
             delBtn.style.display = "none";
             doneBtn.style.display = "block";
@@ -38,10 +41,13 @@ for(var i=0; i<updateBtns.length; i++) {
             // change row element display styles  
             // for origianl world
             origInput.readOnly = true;
+            origInput.classList.remove('active-input')
             // for origianl world
             transInput.readOnly = true;
+            transInput.classList.remove('active-input')
             // for definition
             definInput.readOnly = true;
+            definInput.classList.remove('active-input')
             // for buttons
             editBtn.style.display = "block";
             delBtn.style.display = "block"
@@ -103,8 +109,47 @@ function updateWord(original, translated, definition, id, action){
     })
 
     .then((data) =>{
-        console.log('data:', data)
-        location.reload()
+        action = data['action']
+        translatedWord = data['translatedWord']
+        originalWord = data['originalWord']
+        definition = data['definition']
+        wordId = data['wordId']
+
+        let origInput = document.getElementsByClassName('tbl-input ' + wordId + ' original')[0]
+        // translated world
+        let transInput = document.getElementsByClassName('tbl-input ' + wordId + ' translated')[0]
+        // definition
+        let definInput = document.getElementsByClassName('tbl-input ' + wordId + ' definition')[0]
+        // buttons
+        var delBtn = document.getElementById('delBtn' + wordId)
+        var doneBtn = document.getElementById('doneBtn' + wordId)
+        var cancelBtn = document.getElementById('cancelBtn' + wordId)
+        var editBtn = document.getElementById('editBtn' + wordId)
+
+        if (action == 'save') {
+            document.getElementsByClassName('tbl-input ' + wordId + ' original')[0].value = originalWord;
+            document.getElementsByClassName('tbl-input ' + wordId + ' translated')[0].value = translatedWord;
+            document.getElementsByClassName('tbl-input ' + wordId + ' definition')[0].value = definition;
+
+            origInput.readOnly = true;
+            origInput.classList.remove('active-input')
+            // for origianl world
+            transInput.readOnly = true;
+            transInput.classList.remove('active-input')
+            // for definition
+            definInput.readOnly = true;
+            definInput.classList.remove('active-input')
+            // for buttons
+            editBtn.style.display = "block";
+            delBtn.style.display = "block"
+            doneBtn.style.display = "none";
+            cancelBtn.style.display = "none";
+
+        }
+        if (action == 'delete') {
+            document.getElementsByClassName('tableRow ' + wordId)[0].remove()
+        }
+        
     })
 
 }

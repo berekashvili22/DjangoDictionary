@@ -8,4 +8,5 @@ urlpatterns = [
     path('dictionary/new/', views.dictionary_create, name="dictionary_form"),
     path('dictionary/save/', views.dictionary_save, name="dictionary_save"),
     path('dictionary/update/', views.dictionary_update, name="dictionary_update"),
+    path('dictionary/filter/', views.dictionary_filter, name="dictionary_filter"),
 ]

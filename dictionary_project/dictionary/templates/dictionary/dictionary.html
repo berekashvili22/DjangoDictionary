@@ -7,7 +7,20 @@
         {% csrf_token %}
         {{ form }}
         <button type="submit" class="btn btn-warning word-form update">ADD</button>
+        <div class="search-btn-cont" style="padding-right: 20px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-search" id="search-btn" viewBox="0 0 16 16" style="cursor: pointer;">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </div>
     </form>
+     
+    <div class="search-word-form mb-2 hidden">
+        <input type="text" class="form-control word-form search-input">
+        <button type="submit" class="btn btn-warning word-form update" id="" placeholder='Search word'>SEARCH</button>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-caret-up-fill arrow-btn" id="arrowBtn" viewBox="0 0 16 16">
+          <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+        </svg>
+      </div>
     <table class="table table-sm">
         <thead class="thead-dark">
           <tr>
@@ -20,22 +33,22 @@
         </thead>
         <tbody>
         {% for word in page_obj %}
-          <tr>
+          <tr class="tableRow {{ word.id }}">
             <th scope="row">{{ forloop.counter }}</th>
-            <td class="tableRow originalCol">
+            <td class="tableData originalCol">
               <input type="text" class="form tbl-input {{ word.id }} original" style="border: none;" value="{{ word.original_word }}" readonly>
             </td>
-            <td class="tableRow translatedCol">
+            <td class="tableData translatedCol">
               <input type="text" class="form tbl-input {{ word.id }} translated" style="border: none;" value="{{ word.translated_word }}" readonly>
             </td>
-            <td class="tableRow definitionCol">
+            <td class="tableData definitionCol">
               {% if word.definition == "" %}
                 <input type="text" class="form tbl-input {{ word.id }} definition" style="border: none;" value="-" readonly>
               {% else %}
                 <input type="text" class="form tbl-input {{ word.id }} definition" style="border: none;" value="{{ word.definition }}" readonly>
               {% endif %}
             </td>
-            <td class="tableRow btnsCol">
+            <td class="tableData btnsCol">
               <!-- buttons for inline edit -->
               <!-- edit btn -->
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#848ee6" viewBox="0 0 16 16"
@@ -96,4 +109,19 @@
         </span>
       </div>
 </div>
+
+<script>
+  var searchBtn = document.getElementById('search-btn')
+  var addWordForm = document.getElementsByClassName('input-word-form')[0]
+  var searchWordForm = document.getElementsByClassName('search-word-form')[0]
+  var arrowBtn = document.getElementById('arrowBtn')
+  searchBtn.addEventListener('click', function(){
+    addWordForm.classList.add('hidden')
+    searchWordForm.classList.remove('hidden')
+  });
+  arrowBtn.addEventListener('click', function(){
+    addWordForm.classList.remove('hidden')
+    searchWordForm.classList.add('hidden')
+  });
+</script>
 {% endblock content %}

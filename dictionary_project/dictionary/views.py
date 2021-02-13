@@ -84,8 +84,6 @@ def dictionary_update(request):
             # get updated word data
             data = json.loads(request.body)
             # get word id
-            print(data)
-            exit
             wordId = data['wordId']
             action = data['action']
             # get updated word
@@ -108,7 +106,8 @@ def dictionary_update(request):
                 'translatedWord': data['translated'],
                 'definition': data['definition'],
                 'wordId': data['wordId'],
-                'action': data['action']},
+                'action': data['action'],
+                'search': data['search']},
                  safe=False)
     else:
         return redirect('home')
@@ -116,11 +115,17 @@ def dictionary_update(request):
 @login_required
 def dictionary_filter(request):
     if request.method == 'POST':
-        words = Word.filter(
-            original_word__starts_with=searchOriginal) | Word.filter(
-            translated_word__starts_with=searchTranslated) | Word.filter(
-            definition_word__starts_with=searchDefinition)
-
+        # get request body if request method is POST
+        requestData = json.loads(request.body)
+        # get search text/dictionary id from request
+        searchText = requestData['searchValue']
+        dictionaryId = requestData['dictId']
+        # filter data by text
+        words = Word.objects.filter(
+            original_word__istartswith=searchText, dictionary_id=dictionaryId) | Word.objects.filter(
+            translated_word__istartswith=searchText, dictionary_id=dictionaryId) | Word.objects.filter(
+            definition__istartswith=searchText, dictionary_id=dictionaryId)
+   
         data = words.values()
 
         return JsonResponse(list(data), safe=False)

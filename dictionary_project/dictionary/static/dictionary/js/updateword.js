@@ -70,29 +70,8 @@ for(var i=0; i<updateBtns.length; i++) {
     });
 }
 
-// get csrf token
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-const csrftoken = getCookie('csrftoken');
-
-
 // sends data to server 
-function updateWord(original, translated, definition, id, action){
-    console.log('params passed to function')
-
+function updateWord(original, translated, definition, id, action, search=false){
     var url = '/dictionary/update/'
 
     fetch(url, {
@@ -101,7 +80,7 @@ function updateWord(original, translated, definition, id, action){
             'Content-Type': 'appliaction/json',
             'X-CSRFToken': csrftoken,
         },
-        body:JSON.stringify({'original': original, 'translated': translated, 'definition': definition, 'wordId': id, 'action': action})
+        body:JSON.stringify({'original': original, 'translated': translated, 'definition': definition, 'wordId': id, 'action': action, 'search': search})
     })
 
     .then((response) =>{
@@ -114,7 +93,48 @@ function updateWord(original, translated, definition, id, action){
         originalWord = data['originalWord']
         definition = data['definition']
         wordId = data['wordId']
+        search = data['search']
+        forSearch = ''
 
+        if (search == true) {
+            let forSearch = ' search'
+            
+            let origInput = document.getElementsByClassName('tbl-input ' + wordId + ' original' + forSearch)[0]
+            // translated world
+            let transInput = document.getElementsByClassName('tbl-input ' + wordId + ' translated' + forSearch)[0]
+            // definition
+            let definInput = document.getElementsByClassName('tbl-input ' + wordId + ' definition' + forSearch)[0]
+            // buttons
+            var delBtn = document.getElementById('delBtn' + wordId + forSearch)
+            var doneBtn = document.getElementById('doneBtn' + wordId + forSearch)
+            var cancelBtn = document.getElementById('cancelBtn' + wordId + forSearch)
+            var editBtn = document.getElementById('editBtn' + wordId + forSearch)
+
+            if (action == 'save') {
+                origInput.value = originalWord;
+                transInput.value = translatedWord;
+                definInput.value = definition;
+
+                origInput.readOnly = true;
+                origInput.classList.remove('active-input')
+                // for origianl world
+                transInput.readOnly = true;
+                transInput.classList.remove('active-input')
+                // for definition
+                definInput.readOnly = true;
+                definInput.classList.remove('active-input')
+                // for buttons
+                editBtn.style.display = "block";
+                delBtn.style.display = "block"
+                doneBtn.style.display = "none";
+                cancelBtn.style.display = "none";
+
+            }
+            if (action == 'delete') {
+                document.getElementsByClassName('tableRow ' + wordId + forSearch)[0].remove()
+            }
+        } 
+        
         let origInput = document.getElementsByClassName('tbl-input ' + wordId + ' original')[0]
         // translated world
         let transInput = document.getElementsByClassName('tbl-input ' + wordId + ' translated')[0]
@@ -127,9 +147,9 @@ function updateWord(original, translated, definition, id, action){
         var editBtn = document.getElementById('editBtn' + wordId)
 
         if (action == 'save') {
-            document.getElementsByClassName('tbl-input ' + wordId + ' original')[0].value = originalWord;
-            document.getElementsByClassName('tbl-input ' + wordId + ' translated')[0].value = translatedWord;
-            document.getElementsByClassName('tbl-input ' + wordId + ' definition')[0].value = definition;
+            origInput.value = originalWord;
+            transInput.value = translatedWord;
+            definInput.value = definition;
 
             origInput.readOnly = true;
             origInput.classList.remove('active-input')
@@ -149,7 +169,8 @@ function updateWord(original, translated, definition, id, action){
         if (action == 'delete') {
             document.getElementsByClassName('tableRow ' + wordId)[0].remove()
         }
-        
+
+
     })
 
 }

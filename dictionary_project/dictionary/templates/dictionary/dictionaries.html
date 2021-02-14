@@ -4,11 +4,11 @@
 <!-- home-right-cont -->
 <div class="container mb-5">
     <div class="dict-overview m-3">
-        <div class="dict-cont top" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="dict-cont top">
             <h4 class="pt-2">Total Dictionaries</h4>
             <h4 style="font-size: 25px">{{ dictionaries.count }}</h4>
         </div>
-        <div class="dict-cont top" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="dict-cont top">
             <h4 class="mt-2">Add dictionary</h4>
             <a href="{% url 'dictionary_form' %}" class="add-dict-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" id="add-dict-svg" class="bi bi-plus add-dict" viewBox="0 0 16 16">
@@ -21,26 +21,31 @@
 <div class="container">
     <hr class="m-3">
 </div>
-<div class="container mt-5" style="display: flex;">
+<div class="container mt-5">
     <div class="row">
     {% for dict in dictionaries %}
-    <a href="{% url 'dictionary' dict.id %}" style="text-decoration: none;">
-    <div class="col m-3">
-        <div class="dict-cont m-auto" style="background-color: {{ dict.color }};">
-            <h4 class="pt-4">{{ dict.lang_from }} - {{ dict.lang_to }}</h4>
-            <div class="dict-details">
-                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="white" class="bi bi-file-word pb-2" viewBox="0 0 16 16">
-                    <path d="M4.879 4.515a.5.5 0 0 1 .606.364l1.036 4.144.997-3.655a.5.5 0 0 1 .964 0l.997 3.655 1.036-4.144a.5.5 0 0 1 .97.242l-1.5 6a.5.5 0 0 1-.967.01L8 7.402l-1.018 3.73a.5.5 0 0 1-.967-.01l-1.5-6a.5.5 0 0 1 .364-.606z"/>
-                    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-                </svg>
-                <h4> {{ dict.word_set.all.count }}</h4>
+    <div class="col-sm mb-5">
+        <a href="{% url 'dictionary' dict.id %}" class=" dict-link">
+            <div class="dict-cont" style="background-color: {{ dict.color }};">
+                <div class="dict-langs-cont">
+                    <div class="dict-lang">
+                        <img src="{% static 'dictionary/images/flags/us.svg' %}" class="lang-flag" alt=""> 
+                        <p class="dict-lang-title">{{ dict.lang_from }}</p> 
+                    </div> 
+                    <div class="dict-lang">
+                        <img src="{% static 'dictionary/images/flags/ge.svg' %}" class="lang-flag" alt=""> 
+                        <p class="dict-lang-title">{{ dict.lang_to }}</p> 
+                    </div> 
+                </div>
+                <div class="dict-details">
+                    <p>Words - {{ dict.word_set.all.count }}</p>
+                </div>
+                <div class="dict-view">
+                    <p style="color: #fff;">{{ dict.date_created|date:"M d, Y" }}</p>
+                </div>
             </div>
-            <div class="dict-view">
-                <p style="color: #fff;">{{ dict.date_created|date:"M d, Y" }}</p>
-            </div>
-        </div>
+        </a>
     </div>
-    </a>
     {% endfor %}
     </div>
 </div>

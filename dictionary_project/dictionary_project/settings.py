@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dictionary.apps.DictionaryConfig',
     'users.apps.UsersConfig',
+    'quiz.apps.QuizConfig',
     'crispy_forms',
     'colorfield',
 

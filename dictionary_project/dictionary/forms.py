@@ -22,3 +22,8 @@ class AddWordForm(forms.Form):
 
     definition = forms.CharField(label="", required=False,
         widget=forms.TextInput(attrs={'class': "form-control word-form", 'placeholder': "DEFINITION"}, ))
+
+
+class SearchWordForm(forms.Form):
+     search_field = forms.CharField(label="",max_length=45,
+        widget=forms.TextInput(attrs={'class': "form-control word-form search-input", 'placeholder': "ENTER WORD..."}))

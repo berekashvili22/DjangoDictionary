@@ -19,6 +19,14 @@ def quiz_form(request):
     context = {'form': form}
     return render(request, 'quiz/quiz_form.html', context)
 
+def quiz(request, pk):
+    pk=32
+    quiz = Quiz.objects.get(pk=pk)
+    questions = Question.objects.filter(quiz=quiz)
+    answears = Answear.objects.filter(question__in=questions)
+    context = {'questions': questions, 'answears': answears}
+    return render(request, 'quiz/quiz.html', context)
+
 def quiz_create(request):
     if request.method == "POST":
         form = CreateQuizForm(request.POST)

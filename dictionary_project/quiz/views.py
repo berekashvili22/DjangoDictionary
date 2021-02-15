@@ -31,30 +31,25 @@ def quiz_create(request):
     if request.method == "POST":
         form = CreateQuizForm(request.POST)
         if form.is_valid():
-            print('forma mivige')
+            # get form data
             data = form.cleaned_data
             dictionary = data['dictionary']
             words_filter = data['words_filter']
             length = data['length']
             user = request.user
-
-            r = RandomWords()
-            
-            print('rendomuli sitkvebis sia sheikmna')
-
+            # create quiz with form data
             quiz = Quiz.objects.create(
                 dictionary = dictionary,
                 words_filter = words_filter,
                 length = length,
                 user = user,
             )
-
             quiz.save()
-
-            print('quizi shevkmeni')
-            
+            # get random word
+            r = RandomWords()
+            # ignore
             words = ''
-
+            # if words filter is set to random:
             if words_filter == 'RN':
                 # create words ids list thats belongs to request dictionary
                 valid_words_id_list = Word.objects.filter(dictionary=dictionary).values_list('id', flat=True)
@@ -62,44 +57,41 @@ def quiz_create(request):
                 random_words_id_list = random.sample(list(valid_words_id_list), min(len(valid_words_id_list), length))
                 # get all words with id in random_words_id_list
                 words = Word.objects.filter(id__in=random_words_id_list)
-
-            print('cikli daiwko')
+            # create question for each words
             for i in words:
+                # ტექსტი უნდა შევცვალო 
                 title = f'რა ნიშნავს სიტყვა - {i.translated_word} ?'
                 question = Question.objects.create(
                     quiz= quiz,
                     title=title,
                 )
                 question.save()
-                print('kitxva shevinaxe')
-
+                # set correct answear to question word's original_word
                 correct_answear = i.original_word
+                # list of answears
                 answears = [correct_answear]
+                # generate random words to update list of answears
                 for i in range(3):
+                    # get random word (ეს უნდა შევცვალო ძალიან ნელია)
                     randomWord = r.get_random_word(hasDictionaryDef="true", includePartOfSpeech="noun,verb")
+                    # ზოგჯერ არ აგენერირებს და თავს ვიზღვევ
                     if randomWord == None:
                         randomWord = 'test'
+                    #update answears list with random word
                     answears.append(randomWord)
-                    print('pasuxebis sia gavanaxle axali rendom sitkvit')
-
+                
+                # სწორი პასუხი სულ პირველი რომ არ იყოს
                 random.shuffle(answears)
 
-                print('pasuxebis sia davashufle')
-
+                #create question answears
                 for i in range(len(answears)):
                     is_true = True if correct_answear == answears[i] else False
-                    print(answears[i])
-                    print(i)
                     answear = Answear.objects.create(
                         question = question,
                         title = answears[i],
                         is_true = is_true,      
                     )
                     answear.save()
-
-                    print('pasuxi shevinaxe')
-
-
 
     return HttpResponseRedirect('/quiz')
     

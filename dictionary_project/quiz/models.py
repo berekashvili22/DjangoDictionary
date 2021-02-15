@@ -24,7 +24,7 @@ class Quiz(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.dictionary.lang_from} - {self.dictionary.lang_to} quiz'
+        return f'{self.dictionary.lang_from} - {self.dictionary.lang_to} quiz {self.id}'
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -32,6 +32,11 @@ class Question(models.Model):
 
     def __str__(self):
         return f'{self.title} - quiz {self.quiz.id}'
+
+    @property
+    def answears(self):
+        answears = Answear.objects.filter(question=self)
+        return answears
 
 class Answear(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

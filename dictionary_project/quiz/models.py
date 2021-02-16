@@ -9,7 +9,7 @@ class Quiz(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     RANDOM = 'RN'
-    NEW_WORDS = 'LA'
+    NEW_WORDS = 'NW'
     OLD_WORDS = 'OW'
 
     WORDS_FILTER_CHOICES = (

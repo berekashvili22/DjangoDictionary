@@ -7,45 +7,30 @@
     leftBar.style.display = "none"
 </script>
 <div class="quiz-container">
+    <div class="start-quiz-cont" id="startBtnCont">
+        <button class="start-quiz-btn" id="startQuizBtn">START</button>
+    </div>
     {% for question in questions %}
 
-    <div class="question-container {{ forloop.counter }} mb-5" id="q{{ question.id }}" style="display: none;">
+    <div class="question-container {{ forloop.counter }} mb-5" id="q{{ question.id }}" data-id={{ question.id }} style="display: none;">
         <div class="question-title-container">
             <h4>{{ question.title }}</h4>
         </div>
         <div class="answears-container">
             {% for answear in question.answears %}
-            <div class="answear-container">
+            <button class="answear-container {{ question.id }}" 
+                                data-id="{{ answear.id }}" 
+                                data-parentid = "{{ question.id }}"
+                                data-is_true={{ answear.is_true }}>
+
                 <p class="answear">{{ answear.title }}</p>
-            </div>
+            </button>
             {% endfor %}
-            <div class="submit-answear" data-id={{ forloop.counter }}>
-                <h3 style="margin-bottom: 0px;">SUBMIT</h3>
-            </div>
+            <button class="btn btn-primary nextBtns" id="nextBtn{{ question.id }}" data-contid={{ forloop.counter }} disabled>next</button>
         </div>
     </div>
-
     {% endfor %}
 </div>
-
-<script>
-    var firstQ = document.getElementsByClassName('question-container 1')[0];
-    firstQ.style.display = "block";
-
-    var nextBtns = document.getElementsByClassName('submit-answear');
-
-    for(var i=0; i<nextBtns.length; i++) {
-    nextBtns[i].addEventListener('click', function(){
-            var id = this.dataset.id;
-            console.log(id);
-            document.getElementsByClassName('question-container ' +id)[0].style.display = "none"
-            let idPlus = parseInt(id) + 1
-            console.log(idPlus);
-            document.getElementsByClassName('question-container ' +idPlus)[0].style.display = "block"
-
-        })
-    }
-
-
-</script>
+<!-- local js -->
+<script type="text/javascript" src="{% static 'dictionary/js/quiz.js' %}"></script>
 {% endblock content %}

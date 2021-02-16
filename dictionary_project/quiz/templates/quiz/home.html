@@ -3,8 +3,19 @@
 {% block content %}
 
 <div class="container">
-    <div class="">
-        <a href="{% url 'quiz-form' %}" class="btn btn-outline-primary mt-2">Create Quiz</a>
+    <div class="dict-overview m-3">
+        <div class="dict-cont top">
+            <h4 class="pt-2">Total Quizess</h4>
+            <h4 style="font-size: 25px">{{ dictionaries.count }}</h4>
+        </div>
+        <div class="dict-cont top">
+            <h4 class="mt-2">Create Quiz</h4>
+            <a href="{% url 'quiz-form' %}" class="add-dict-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" id="add-dict-svg" class="bi bi-plus add-dict" viewBox="0 0 16 16">
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg> 
+            </a>
+        </div>
     </div>
 </div>
 

@@ -2,9 +2,9 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-    <div class="container mt-5 p-5 border" id="dict-form-container" style="background-color: antiquewhite; border-radius: 5px;">
+    <div class="container mt-5 p-5 border" id="dict-form-container" style="border-radius: 5px;">
         <div class="dict-img-cont">
-            <img src="{% static 'dictionary/images/book_lover1.svg' %}" class="dict-img" alt="">
+            <img src="{% static 'dictionary/images/SVG/bookmarks.svg' %}" class="dict-img" alt="">
         </div>
         <form action="{% url 'quiz-create' %}" method="POST">
         <legend class="mb-4" style="font-weight: bold;">Create Quizz</legend>

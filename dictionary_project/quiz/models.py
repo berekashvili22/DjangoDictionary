@@ -26,6 +26,10 @@ class Quiz(models.Model):
     def __str__(self):
         return f'{self.dictionary.lang_from} - {self.dictionary.lang_to} quiz {self.id}'
 
+    @property
+    def name(self):
+        return f'{self.dictionary.lang_from} - {self.dictionary.lang_to}'
+
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
@@ -47,7 +51,8 @@ class Answear(models.Model):
         return f'{self.title} - question {self.question.id}'
 
 class Result(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(null=False)
     incorrect_words = models.TextField(null=False)
     correct_words = models.TextField()

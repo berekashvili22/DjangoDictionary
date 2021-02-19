@@ -23,8 +23,7 @@ def quiz(request, pk):
     pk=pk
     quiz = Quiz.objects.get(pk=pk)
     questions = Question.objects.filter(quiz=quiz)
-    answears = Answear.objects.filter(question__in=questions)
-    context = {'questions': questions, 'answears': answears}
+    context = {'questions': questions, 'quizId': quiz.id}
     return render(request, 'quiz/quiz.html', context)
 
 def quiz_create(request):
@@ -107,4 +106,25 @@ def quiz_create(request):
 
     return HttpResponseRedirect('/quiz/live/%s' % (quiz.id
     ))
-    
+
+
+def quizResult(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        quiz = Quiz.objects.get(id=data['quizId'])
+        correct = len(data['CorrectAnswears'])
+        incorrect = len('data[IncorrectAnswears]')
+        score = correct//incorrect
+        Result.objects.create(
+            quiz = quiz,
+            user = request.user,
+            score = score,
+            correct_words = data['CorrectAnswears'],
+            incorrect_words = data['IncorrectAnswears'] 
+        )
+        id = data['quizId']
+        print(id)
+        Quiz.objects.filter(pk=id).delete()
+        return JsonResponse({"status": "success"})
+    else:
+        return redirect('quiz')

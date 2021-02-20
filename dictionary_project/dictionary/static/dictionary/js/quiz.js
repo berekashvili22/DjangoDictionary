@@ -30,8 +30,6 @@ var answear = document.getElementsByClassName('answear-container');
 // create variables for result
 var CorrectAnswears = [];
 var IncorrectAnswears = [];
-var correct = 0;
-var incorrect = 0;
 
 // add eventlistener to each answear button click
 for(var i=0; i<answear.length; i++) {
@@ -51,14 +49,12 @@ answear[i].addEventListener('click', function(){
         // if answear is true
         if (isTrue === "True"){
             this.classList.add("true");
-            correct += 1;
-            CorrectAnswears += id;
+            CorrectAnswears.push(parentId);
             document.getElementById('progressBar'+parentId).style.backgroundColor = "green";
         // if answear is false
         } else {
             this.classList.add("false");
-            incorrect += 1;
-            IncorrectAnswears += id;
+            IncorrectAnswears.push(parentId);
             // show correct answear
             document.getElementById('progressBar'+parentId).style.backgroundColor = "red";
             var answears = document.getElementsByClassName('answear-container ' + parentId)
@@ -84,13 +80,42 @@ nextBtns[i].addEventListener('click', function(){
             let nextContId = parseInt(contId) + 1
             document.getElementsByClassName('question-container ' +nextContId)[0].style.display = "block"
         } else {
+            document.getElementsByClassName('question-container ' +contId)[0].style.display = "none"
+
+            document.getElementById('progressBar').style.display = "none";
+
+            document.getElementById('quizResult').style.display = "block";
+
+            document.getElementById('total').innerHTML = "Total Questions: " + quizLength;
+
+            document.getElementById('corrects').innerHTML = "Correct answears: " + CorrectAnswears.length;
+            document.getElementById('incorrects').innerHTML = "Incorrect answears: " + IncorrectAnswears.length;
+            document.getElementById('score').innerHTML = "Score: " + (CorrectAnswears.length * 100) / quizLength + "%";
+            
+            var quizId = document.getElementById('quizContainer').dataset.id
+
+            
+            getResult(CorrectAnswears, IncorrectAnswears, quizId);
             console.log('quiz completed')
-            console.log(CorrectAnswears)
-            console.log(correct)
-            console.log('---')
-            console.log(IncorrectAnswears)
-            console.log(incorrect)
         }
+    })
+}
+
+
+
+function getResult(CorrectAnswears, IncorrectAnswears, quizId){
+    var url = '/quiz/result/'
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'appliaction/json',
+            'X-CSRFToken': csrftoken,
+        },
+        body:JSON.stringify({'CorrectAnswears': CorrectAnswears, 'IncorrectAnswears': IncorrectAnswears, 'quizId': quizId})
+    })
+
+    .then((response) =>{
+        return response.json()
     })
 }
 

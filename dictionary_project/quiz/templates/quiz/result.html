@@ -1,0 +1,40 @@
+{% extends 'dictionary/main.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="result-title-container">
+        <h3>{{ result.dictionary }}</h3>
+    </div>
+    <div class="result-top-container mb-5">
+        <div class="result-top-box">
+            <h4 class="result-details-title">Correct Answears</h4>
+            <div class="result-details green">{{ result.correct_count }}</div>
+        </div>
+        <div class="result-top-box">
+            <h4 class="result-details-title">Incorrect Answears</h4>
+            <div class="result-details red">{{ result.incorrect_count }}</div>
+        </div>
+        <div class="result-top-box">
+            <h4 class="result-details-title">Score</h4>
+            <div class="result-details">{{ result.score }}</div>
+        </div>
+    </div>
+    <hr>
+    <h3>Correct Words</h3>
+    <hr class="mb-5">
+    <div class="result-words-container">
+        {% for correct_word in correct_words%}
+            <p class="result-word correct">{{ correct_word.original_word }}</p>
+        {% endfor %}
+    </div>
+    <hr>
+    <h3>Incorrect Words</h3>
+    <hr class="mb-5">
+    <div class="result-words-container">
+        {% for incorrect_word in incorrect_words%}
+            <p class="result-word incorrect">{{ incorrect_word.original_word }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+

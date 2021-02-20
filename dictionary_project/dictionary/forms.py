@@ -3,14 +3,26 @@ from django.forms.widgets import TextInput
 from .models import Dictionary, Word
 
 class CreateDictForm(forms.Form):
+    LANGUAGE_CHOICES = (
+        ('KA', 'GEORGIAN'),
+        ('EN', 'ENGLISH'),
+        ('RU', 'RUSSIAN'),
+    )
+
     lang_from = forms.CharField(label="Language From",max_length=100,
-        widget=forms.TextInput(attrs={'class': "form-control dict-form"}))
+        widget=forms.Select(choices=LANGUAGE_CHOICES, attrs={'class': "form-control dict-form"}))
 
     lang_to = forms.CharField(label='Language To',max_length=100,
-        widget=forms.TextInput(attrs={'class': "form-control dict-form"}))
+        widget=forms.Select(choices=LANGUAGE_CHOICES, attrs={'class': "form-control dict-form"}))
 
     color = forms.CharField(label='Color', max_length=7,
         widget=forms.TextInput(attrs={'type': 'color', 'class': "form-control dict-form color"}))
+
+    def __init__(self, *args, **kwargs):
+        super(CreateDictForm, self).__init__(*args, **kwargs)
+        # set select field's default values
+        self.initial['lang_from'] = 'EN'
+        self.initial['lang_to'] = 'KA'
 
 
 class AddWordForm(forms.Form):

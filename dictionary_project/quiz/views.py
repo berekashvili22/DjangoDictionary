@@ -9,10 +9,28 @@ from . words import getRandomWord
 
 
 def quiz_home(request):
-    # get all request.user dictionaries and order by date created
-    # dictionaries = Dictionary.objects.all().filter(user=request.user).order_by('-date_created')
-    context = {'quiz': 'quiz'}
+    results = Result.objects.all().filter(user=request.user).order_by('-date_created')
+    context = {'results': results}
     return render(request, 'quiz/home.html', context)
+
+def result(reqeuest, pk):
+    result = Result.objects.get(pk=pk)
+    def filterIds(l):
+        l = l.replace("'", "")
+        x = l.strip('][').split(', ') 
+        y = []
+        for i in x:
+            y.append(int(i))
+        return y
+    correct_words_ids = filterIds(result.correct_words)
+    incorrect_words_ids= filterIds(result.incorrect_words)
+
+    correct_words = Word.objects.filter(id__in=correct_words_ids)
+    incorrect_words = Word.objects.filter(id__in=incorrect_words_ids)
+
+    # print(correct_words, incorrect_words)
+    context = {'result': result, 'correct_words': correct_words, 'incorrect_words': incorrect_words}
+    return render(reqeuest, 'quiz/result.html', context)
 
 def quiz_form(request):
     form = CreateQuizForm()
@@ -20,7 +38,6 @@ def quiz_form(request):
     return render(request, 'quiz/quiz_form.html', context)
 
 def quiz(request, pk):
-    pk=pk
     quiz = Quiz.objects.get(pk=pk)
     questions = Question.objects.filter(quiz=quiz)
     context = {'questions': questions, 'quizId': quiz.id}
@@ -66,19 +83,21 @@ def quiz_create(request):
                 words = Word.objects.filter(dictionary=dictionary).order_by('-id')[:max_length]
             # create question for each words
             print(words)
-            for i in words:
+            for word in words:
                 # ტექსტი უნდა შევცვალო 
-                title = f'რომელია {i.translated_word} - ის ინგლისური შესატყვისი ?'
+                title = f'რომელია {word.translated_word} - ის ინგლისური შესატყვისი ?'
                 question = Question.objects.create(
-                    quiz= quiz,
+                    id=word.id,
+                    quiz=quiz,
                     title=title,
                 )
                 question.save()
                 # set correct answear to question word's original_word
-                correct_answear = i.original_word
+                correct_answear = word.original_word
                 # list of answears
                 answears = [correct_answear]
                 # generate random words to update list of answears
+                # ეს კიდე უნდა შევცვალო.... გენო დავიღალე
                 for i in range(3):
                     # get random word 
                     randomWord = getRandomWord()
@@ -108,23 +127,26 @@ def quiz_create(request):
     ))
 
 
-def quizResult(request):
+def result_save(request):
     if request.method == "POST":
         data = json.loads(request.body)
         quiz = Quiz.objects.get(id=data['quizId'])
+        dictionary = quiz.dictionary
         correct = len(data['CorrectAnswears'])
-        incorrect = len('data[IncorrectAnswears]')
-        score = correct//incorrect
+        incorrect = len(data['IncorrectAnswears'])
+        total = correct + incorrect   
+        #  get x/100 score
+        score = (correct * 100) // total
         Result.objects.create(
-            quiz = quiz,
+            dictionary = dictionary,
             user = request.user,
             score = score,
+            correct_count = correct,
+            incorrect_count = incorrect,
             correct_words = data['CorrectAnswears'],
             incorrect_words = data['IncorrectAnswears'] 
         )
-        id = data['quizId']
-        print(id)
-        Quiz.objects.filter(pk=id).delete()
+        quiz.delete()
         return JsonResponse({"status": "success"})
     else:
         return redirect('quiz')

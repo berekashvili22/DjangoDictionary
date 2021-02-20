@@ -29,11 +29,11 @@
             <div class="dict-cont" style="background-color: {{ dict.color }};">
                 <div class="dict-langs-cont">
                     <div class="dict-lang">
-                        <img src="{% static 'dictionary/images/flags/us.svg' %}" class="lang-flag" alt=""> 
+                        <img src="{% static 'dictionary/images/flags/'|add:dict.lang_from|add:'.svg' %}" class="lang-flag" alt=""> 
                         <p class="dict-lang-title">{{ dict.lang_from }}</p> 
                     </div> 
                     <div class="dict-lang">
-                        <img src="{% static 'dictionary/images/flags/ge.svg' %}" class="lang-flag" alt=""> 
+                        <img src="{% static 'dictionary/images/flags/'|add:dict.lang_to|add:'.svg' %}" class="lang-flag" alt=""> 
                         <p class="dict-lang-title">{{ dict.lang_to }}</p> 
                     </div> 
                 </div>

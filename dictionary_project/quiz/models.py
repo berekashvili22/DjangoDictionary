@@ -7,20 +7,8 @@ from dictionary.models import *
 class Quiz(models.Model):
     dictionary = models.ForeignKey(Dictionary, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    RANDOM = 'RN'
-    NEW_WORDS = 'NW'
-    OLD_WORDS = 'OW'
-
-    WORDS_FILTER_CHOICES = (
-        (RANDOM, 'Random'),
-        (NEW_WORDS, 'New Words'),
-        (OLD_WORDS, 'Old Words'),
-    )
-
     words_filter = models.CharField(max_length=255, verbose_name="Words Filter", choices=WORDS_FILTER_CHOICES, default=RANDOM)
     length = models.IntegerField(default=20)
-    is_complete = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -51,11 +39,13 @@ class Answear(models.Model):
         return f'{self.title} - question {self.question.id}'
 
 class Result(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.DO_NOTHING)
+    dictionary = models.ForeignKey(Dictionary, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     score = models.IntegerField(null=False)
     incorrect_words = models.TextField(null=False)
     correct_words = models.TextField()
+    correct_count = models.IntegerField()
+    incorrect_count = models.IntegerField()
     date_created = models.DateTimeField(auto_now_add=True)
 
 

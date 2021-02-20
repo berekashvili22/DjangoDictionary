@@ -5,6 +5,16 @@ from dictionary.models import *
 # Create your models here.
 
 class Quiz(models.Model):
+    RANDOM = 'RN'
+    NEW_WORDS = 'NW'
+    OLD_WORDS = 'OW'
+
+    WORDS_FILTER_CHOICES = (
+        (RANDOM, 'Random'),
+        (NEW_WORDS, 'New Words'),
+        (OLD_WORDS, 'Old Words'),
+    )
+    
     dictionary = models.ForeignKey(Dictionary, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     words_filter = models.CharField(max_length=255, verbose_name="Words Filter", choices=WORDS_FILTER_CHOICES, default=RANDOM)

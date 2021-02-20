@@ -6,7 +6,7 @@
     var leftBar = document.getElementsByClassName('home-left-cont')[0]
     leftBar.style.display = "none"
 </script>
-<div class="quiz-container">
+<div class="quiz-container" id="quizContainer" data-id={{ quizId }}>
     <div class="start-quiz-cont" id="startBtnCont">
         <button class="start-quiz-btn" id="startQuizBtn">START</button>
     </div>
@@ -30,6 +30,23 @@
         </div>
     </div>
     {% endfor %}
+    <div class="result-cont" id="quizResult" style="display: none;">
+        <div class="result-title-cont">
+            <h4 class="result-title">Quiz results</h4>
+        </div>
+        <hr>
+        <div class="result">
+            <p class="result-details" id="total"></p>
+            <p class="result-details" id="corrects"></p>
+            <p class="result-details" id="incorrects"></p>
+            <p class="result-details" id="score"></p>
+        </div>
+        <hr>
+        <div class="result-btns-cont">
+            <a href="{% url 'quiz-home' %}" class="btn btn-info res-btn">Details</a>
+            <a href="{% url 'quiz-home' %}" class="btn btn-primary res-btn">Finish</a>
+        </div>
+    </div>
 </div>
 <!-- local js -->
 <script type="text/javascript" src="{% static 'dictionary/js/quiz.js' %}"></script>

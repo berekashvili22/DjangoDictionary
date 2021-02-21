@@ -2,22 +2,29 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-    <div class="container mt-5 p-4 border" id="register-container">
-        <form action="" method="POST">
-            {% csrf_token %}
-            <fieldset class="form-group">
-                <legend class="mb-2" style="font-weight: bold;">E-commerce</legend>
-                <h6>Log In</h6>
-                <hr>
-                {{ form|crispy }}
-                <div class="form-group">
-                    <button class="btn btn-dark">Log In</button>
-                </div>
-            </fieldset>
-        </form>
-        <hr>
-        <div class="pt-2">
-            <small class="text-muted mr-2">Need An Account ?</small> <a href="{% url 'register' %}">Sing Up</a>
+    <script>
+        document.getElementById('mainNavbar').style.display = "none";
+    </script>
+    <div class="login-container">
+        <div class="login-form-container" id="">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="mb-2" style="font-weight: bold; font-size: 32px;">Login</legend>
+                    <hr>
+                    {{ form|crispy }}
+                    <div class="form-group">
+                        <button class="btn btn-dark">Log In</button>
+                    </div>
+                </fieldset>
+            </form>
+            <hr>
+            <div class="pt-2">
+                <small class="text-muted mr-2">Need An Account ?</small> <a href="{% url 'register' %}">Sing up</a>
+            </div>
+        </div>
+        <div class="login-img-cont">
+            <img src="{% static 'dictionary/images/AUTH/login.svg' %}" class="login-img" alt="">
         </div>
     </div>
 {% endblock content %}

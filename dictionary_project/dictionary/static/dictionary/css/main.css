@@ -807,12 +807,13 @@ body {
     justify-content: space-evenly;
 }
 
-.progress-box {
+.progress-box-wrap {
     width: 300px;
     height: 150px;
     color: #fff;
     background-color: #333;
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     border-radius: 5px;
@@ -820,9 +821,19 @@ body {
 
 .progress-box-title-cont {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%;
     font-size: 24px;
+}
+
+.progress-box-value-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-size: 24px;
+    background-color: rgb(63, 63, 63);
 }

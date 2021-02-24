@@ -3,8 +3,8 @@
 {% block content %}
 {% if user.is_authenticated %}
 <!-- auth -->
-
-
+<!-- zing chart -->
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 
 
 <div class="home-auth-cont">
@@ -38,6 +38,9 @@
         </div>
 
     </div>
+    <div class="container mt-3" style="width: 500px; height: 200px;">
+        <div id="myChart"></div>
+    </div>
 </div>
 
 <script>
@@ -60,17 +63,42 @@ fetch(url)
         totalWords.innerHTML = data['words_count']
         totalQuizes.innerHTML = data['quizes_count']
     }
+   
+    var chartData = {
+        'theme':'dark',
+        'type':'bar',
+        'plot': {
+            styles: ["#ff6666", "#ff99cc", "#cc99ff", "#6699ff"]
+        },
+        'title': {
+            text: 'Words added',
+            fontSize: 24,
+        },
+        'scale-x':{
+            'values':[
+                'Year',
+                'Month',
+                'Week',
+                'Day',
+            ]
+        },
+        'series':[
+            {
+                'values':[
+                    data['words_this_year'],
+                    data['words_this_month'],
+                    data['words_this_week'],
+                    data['words_this_day'],
+                ]
+            }
+        ]
 
+    }
 
-
-
-
-
-
-
-
-
-
+    zingchart.render({
+        id:'myChart',
+        data: chartData,
+    })
 
 
 

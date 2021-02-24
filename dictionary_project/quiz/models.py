@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from dictionary.models import *
+from django.core.exceptions import ValidationError
+
 
 # Create your models here.
 
@@ -23,6 +25,10 @@ class Quiz(models.Model):
 
     def __str__(self):
         return f'{self.dictionary.lang_from} - {self.dictionary.lang_to} quiz {self.id}'
+
+    def validate_dictionary(self):
+        if len(self.dictionary.words) <= 0:
+            raise ValidationError('Dictionary is empty')
 
     @property
     def name(self):

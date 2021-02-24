@@ -6,7 +6,7 @@
         <div class="dict-img-cont">
             <img src="{% static 'dictionary/images/SVG/bookmarks.svg' %}" class="dict-img" alt="">
         </div>
-        <form action="{% url 'quiz-create' %}" method="POST">
+        <form action="{% url 'quiz-create' %}" method="POST" style="width: 400px;">
         <legend class="mb-4" style="font-weight: bold;">Create Quizz</legend>
         {% csrf_token %}
         {{ form|crispy }}

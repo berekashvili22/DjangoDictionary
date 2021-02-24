@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'dictionary.apps.DictionaryConfig',
     'users.apps.UsersConfig',
     'quiz.apps.QuizConfig',
+    'api.apps.ApiConfig',
+    
     'crispy_forms',
     'colorfield',
+    'rest_framework'
 
 ]
 

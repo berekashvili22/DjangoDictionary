@@ -23,10 +23,10 @@ def result(reqeuest, pk):
     context = {'result': result, 'correct_words': correct_words, 'incorrect_words': incorrect_words}
     return render(reqeuest, 'quiz/result.html', context)
 
-def quiz_form(request):
-    form = CreateQuizForm()
-    context = {'form': form}
-    return render(request, 'quiz/quiz_form.html', context)
+# def quiz_form(request):
+#     form = CreateQuizForm()
+#     context = {'form': form}
+#     return render(request, 'quiz/quiz_form.html', context)
 
 def quiz(request, pk):
     quiz = Quiz.objects.get(pk=pk)
@@ -40,7 +40,11 @@ def quiz_create(request):
         if form.is_valid():
             data = form.cleaned_data
             user = request.user
-    return create_quiz(data, user)
+            return create_quiz(data, user)
+    else:
+        form=CreateQuizForm()
+    context = {'form': form}
+    return render(request, 'quiz/quiz_form.html', context)
 
 
 def result_save(request):

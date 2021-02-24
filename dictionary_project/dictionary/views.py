@@ -9,17 +9,7 @@ import json
 from django.http import JsonResponse
 
 def home(request):
-    if request.user.is_authenticated:
-        user = request.user
-        dicts = Dictionary.objects.filter(user=user) 
-        dicts_count = dicts.count()
-        words_count = Word.objects.filter(dictionary__in=dicts).count()
-        quiz_count = Result.objects.filter(user=user).count()
-        context = {'dicts': dicts, 'dicts_count': dicts_count, 'words_count': words_count, 'quiz_count': quiz_count}
-    else:
-        context = {'empty':'empty'}
-
-    return render(request, 'dictionary/home.html', context)
+    return render(request, 'dictionary/home.html')
 
 @login_required
 def dictionaries(request):

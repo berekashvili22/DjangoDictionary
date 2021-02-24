@@ -8,35 +8,79 @@
 
 
 <div class="home-auth-cont">
-    <!-- <div class="home-auth-title-cont mb-5">
-        <h2 class="home-auth-title">{{ user.first_name }} {{ user.last_name }}</h2>
-    </div> -->
     <div class="progress-box-contianer mt-3">
-        <div class="progress-box">
-            <div class="progress-box-title-cont">
-                <h4 class="progress-box-title">Total Dictionaries</h4>
-                <h4>{{ dicts_count }}</h4>
-            </div>
+        <div class="progress-box-wrap">
+                <div class="progress-box-title-cont">
+                    <h4 class="progress-box-title">Total Dictionaries</h4>
+                </div>
+                <div class="progress-box-value-cont">
+                    <h4 id="totalDicts"></h4>
+                </div>
             <div></div>
         </div>
-        <div class="progress-box">
-            <div class="progress-box-title-cont">
-                <h4 class="progress-box-title">Total Words</h4>
-                <h4>{{ words_count }}</h4>
-            </div>
+        <div class="progress-box-wrap">
+                <div class="progress-box-title-cont">
+                    <h4 class="progress-box-title">Total Words</h4>
+                </div>
+                <div class="progress-box-value-cont">
+                    <h4 id="totalWords"></h4>
+                </div>
             <div></div>
         </div>
-        <div class="progress-box">
-            <div class="progress-box-title-cont">
-                <h4 class="progress-box-title">Total Quizes</h4>
-                <h4>{{ quiz_count }}</h4>
-            </div>
+        <div class="progress-box-wrap">
+                <div class="progress-box-title-cont">
+                    <h4 class="progress-box-title">Total Quizes</h4>
+                </div>
+                <div class="progress-box-value-cont">
+                    <h4 id="totalQuizes"></h4>
+                </div>
             <div></div>
         </div>
+
     </div>
 </div>
 
+<script>
 
+var url = '/api/progress/'
+
+fetch(url)
+.then((resp) => resp.json())
+.then(function(data){
+    console.log('data:', data)
+    
+    totalData()
+
+    function totalData(){
+        var totalDicts = document.getElementById('totalDicts')
+        var totalWords = document.getElementById('totalWords')
+        var totalQuizes = document.getElementById('totalQuizes')
+
+        totalDicts.innerHTML = data['dicts_count']
+        totalWords.innerHTML = data['words_count']
+        totalQuizes.innerHTML = data['quizes_count']
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+})
+
+
+
+
+</script>
 
 
 

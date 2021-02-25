@@ -805,6 +805,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    width: 75%;
+    margin: auto;
 }
 
 .progress-box-wrap {
@@ -836,4 +838,9 @@ body {
     height: 100%;
     font-size: 24px;
     background-color: rgb(63, 63, 63);
+}
+
+.datechart {
+    display: flex;
+    justify-content: space-around;
 }

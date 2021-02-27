@@ -9,7 +9,14 @@ class CreateQuizForm(ModelForm):
     class Meta:
         model = Quiz
         fields = ['dictionary', 'words_filter', 'length']
+
+    def __init__(self, user, *args, **kwargs):
+        super(CreateQuizForm, self).__init__(*args, **kwargs)
+        self.fields['dictionary'].queryset = Dictionary.objects.filter(user=user)
+        self.fields['dictionary'].empty_label = None
     
+    
+
     def clean_dictionary(self):
         dictionary = self.cleaned_data.get('dictionary')
         # check dictionary words length

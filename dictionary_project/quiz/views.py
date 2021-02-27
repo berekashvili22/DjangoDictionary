@@ -5,10 +5,18 @@ from . forms import CreateQuizForm
 import json
 from django.http import JsonResponse
 from . utils import create_quiz, save_result, get_ids
+from django.core.paginator import Paginator
+
 
 def quiz_home(request):
-    results = Result.objects.all().filter(user=request.user).order_by('-date_created')
-    context = {'results': results}
+    # get all words from dictionary
+    result = Result.objects.filter(user=request.user).order_by('-date_created')
+    # pagiante
+    paginator = Paginator(result, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {'results': result, 'page_obj': page_obj}
     return render(request, 'quiz/home.html', context)
 
 def result(reqeuest, pk):
@@ -23,11 +31,6 @@ def result(reqeuest, pk):
     context = {'result': result, 'correct_words': correct_words, 'incorrect_words': incorrect_words}
     return render(reqeuest, 'quiz/result.html', context)
 
-# def quiz_form(request):
-#     form = CreateQuizForm()
-#     context = {'form': form}
-#     return render(request, 'quiz/quiz_form.html', context)
-
 def quiz(request, pk):
     quiz = Quiz.objects.get(pk=pk)
     questions = Question.objects.filter(quiz=quiz)
@@ -36,13 +39,13 @@ def quiz(request, pk):
 
 def quiz_create(request):
     if request.method == "POST":
-        form = CreateQuizForm(request.POST)
+        form = CreateQuizForm(request.user, request.POST)
         if form.is_valid():
             data = form.cleaned_data
             user = request.user
             return create_quiz(data, user)
     else:
-        form=CreateQuizForm()
+        form=CreateQuizForm(user=request.user)
     context = {'form': form}
     return render(request, 'quiz/quiz_form.html', context)
 

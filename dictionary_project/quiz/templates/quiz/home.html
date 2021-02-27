@@ -32,7 +32,7 @@
           </tr>
         </thead>
         <tbody>
-        {% for result in results%}
+        {% for result in page_obj%}
           <tr>
             <th scope="row">{{ result.dictionary }}</th>
             <td>{{ result.correct_count }}</td>
@@ -51,7 +51,28 @@
         {% endfor %}
         </tbody>
       </table>
-    
+      <!-- pagination -->
+      <div class="pagination mt-3 mb-2" style="display: block;">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="btn btn-outline-dark"><<</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-dark"><</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <a href="?page={{ num }}" class="btn btn-dark">{{ num }}</a>
+              {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                <a href="?page={{ num }}" class="btn btn-outline-dark">{{ num }}</a>
+              {% endif %}
+            {% endfor %}    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-dark">></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-outline-dark">>></a>
+            {% endif %}
+        </span>
+      </div>
+
 </div>
 
 {% endblock content %}

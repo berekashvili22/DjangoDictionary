@@ -11,6 +11,12 @@ from django.http import JsonResponse
 def home(request):
     return render(request, 'dictionary/home.html')
 
+def about(request):
+    return render(request, 'dictionary/about.html')
+
+def contact(request):
+    return render(request, 'dictionary/contact.html')
+
 @login_required
 def dictionaries(request):
     # get all request.user dictionaries and order by date created

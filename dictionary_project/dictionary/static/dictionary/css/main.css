@@ -1,7 +1,7 @@
 body {
     background-color: #eeeedd;
     box-sizing: border-box;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 /* navbar */
@@ -843,4 +843,117 @@ body {
 .datechart {
     display: flex;
     justify-content: space-around;
+}
+
+/* removing flash messages */
+
+#hideMe {
+    -moz-animation: hideAnimation 0s ease-in 3s forwards;
+    /* Firefox */
+    -webkit-animation: hideAnimation 0s ease-in 3s forwards;
+    /* Safari and Chrome */
+    -o-animation: hideAnimation 0s ease-in 3s forwards;
+    /* Opera */
+    animation: hideAnimation 0s ease-in 3s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+@keyframes hideAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes hideAnimation {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
+}
+
+/* about */
+.about-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #333;
+}
+
+.about-title-cont {
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+}
+
+.about-title {
+    color: #fff;
+}
+
+.about-text {
+    width: 70%;
+    color: #fff;
+}
+
+
+/* contact */
+
+.contact-container {
+    background-color: #333;
+    height: 94vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.contact-list {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
+.c-list-box {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    height: 15vh;
+}
+
+.c-list-title {
+    color: #fff;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+/* profiel picture change */
+.profile-image {
+    width: 200px;
+    padding: 5px;
+  }
+ 
+.profile-image-radio[type=radio] {
+display: none!important;
+}
+
+.profile-image:hover {
+opacity:0.8;
+cursor: pointer;
+}
+
+.profile-image:active {
+opacity:0.4;
+cursor: pointer;
+}
+
+.profile-image-radio[type=radio]:checked + label > .profile-image {
+border: 10px solid rgb(50, 113, 230);
 }

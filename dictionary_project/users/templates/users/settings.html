@@ -1,9 +1,24 @@
 {% extends 'dictionary/main.html' %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-
-<div class="container">
-    <p>settings</p>
-</div>
-
+    <div class="register-cont pt-5 mt-5">
+        <div class="register-form-container" id="register-container">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="mb-2" style="font-weight: bold; font-size: 30px;">{{ user.first_name }} {{ user.last_name }}</legend>
+                    <h4>Profile Info</h4>
+                    <hr>
+                    {{ u_form|crispy }}
+                    <div class="form-group">
+                        <button class="btn btn-dark">Update</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="login-img-cont">
+            <img src="{% static 'dictionary/images/profile/profile.svg' %}" class="login-img" alt="">
+        </div>
+    </div>
 {% endblock content %}

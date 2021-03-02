@@ -75,7 +75,15 @@ body {
 .image-cont {
     margin-top: 25px;
     width: 100px;
+    position: relative;
 }
+
+.profile-img-edit {
+    position: absolute;
+    bottom: 0px;
+    right: -10px;
+}
+
 .profile-avatar {
     width: 100%;
 }
@@ -936,7 +944,7 @@ body {
 
 /* profiel picture change */
 .profile-image {
-    width: 200px;
+    width: 130px;
     padding: 5px;
   }
  
@@ -955,5 +963,5 @@ cursor: pointer;
 }
 
 .profile-image-radio[type=radio]:checked + label > .profile-image {
-border: 10px solid rgb(50, 113, 230);
+border: 10px solid rgba(67, 121, 221, 0.493);
 }

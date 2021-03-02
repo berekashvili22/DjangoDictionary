@@ -64,23 +64,18 @@
     <div class="home-left-cont">
         <div class="image-cont">
             <img src="{{  request.user.profile.image.url  }}" class="profile-avatar">
-        </div>
-        <!-- modal -->
-        <!-- Button trigger modal -->
-            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Launch demo modal
-            </button> -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" class="bi bi-pencil" viewBox="0 0 16 16"
+            <!-- edit btn -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="profile-img-edit" width="20" height="20" fill="white" class="bi bi-pencil" viewBox="0 0 16 16"
             type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                 <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
               </svg>
-        
-            <!-- Modal -->
+        </div>
+        <!-- modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Change Profile Image</h5>
+                    <h3 class="modal-title" id="exampleModalLabel">Change Profile Image</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -113,7 +108,7 @@
                             <img class="profile-image" src="{% static 'dictionary/images/profile/woman3.png' %}" />
                             </label>
                             <hr>
-                            <button class="btn btn-dark w-100">save image</button>
+                            <button class="btn btn-dark w-100">SAVE</button>
                         </form>
                     </div>
                 </div>

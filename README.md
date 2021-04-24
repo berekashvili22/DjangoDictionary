@@ -1,3 +1,3 @@
 # DjangoDictionary
-Django Dictionary app with quiz system /n
+Django Dictionary app with quiz system
 http://djangodictionary.pythonanywhere.com/
